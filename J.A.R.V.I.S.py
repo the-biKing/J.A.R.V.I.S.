@@ -15,15 +15,18 @@ from random import randint
 
 intents = discord.Intents.default()
 intents.message_content = True
+
 client = discord.Client(intents=intents)
 
 
-response = ['you there', 'u there', 'hello']
-weather=['weather']
-self_intro=['who are u','who r u','who are you','what are you']
-youbike=['youbike','ubike','YouBike','Ubike','youBike','uBike']
-bad_word=['fuck','shit','ass', 'bitch','cunt','dick','pussy','nigga','nigger','fucker','stupid']
-giveme=['tell','give','find me']
+
+
+
+
+
+
+give_me=['tell','give','find me']
+
 meme=['meme','迷因']
 
 NTP=['newtaipei','new taipei','New Taipei','NTP','ntp','新北市']
@@ -76,17 +79,23 @@ async def on_message(message):
 
   if any(message.content.startswith(keyword) for keyword in ('jarvis', 'Jarvis')):
     #self_intro
+    self_intro=['who are u','who r u','who are you','what are you']
     for item in self_intro:
       if item in message.content:
         await message.channel.send('Allow me to introduce myself, my name is J.A.R.V.I.S. Just another rather very intelligence system. I\'m designed to help you with various tasks, including music, weather forcast and so on. If you come up with some new function that i should have, feel free to tell my creater to add them.')
-        
+    
     # Response
+    response = ['you there', 'u there', 'hello']
     for item in response:
       if item in message.content:
         await message.channel.send('At your service, sir.')
         return
+      
+
+
     
     # weather
+    weather=['weather']
     for item in weather:
       if item in message.content:
         def get_weather(x):
@@ -199,6 +208,7 @@ async def on_message(message):
             return
 
     #youbike
+    youbike=['youbike','ubike','YouBike','Ubike','youBike','uBike']
     for item in youbike:
       if item in message.content:
         context = ssl._create_unverified_context()
@@ -261,22 +271,23 @@ async def on_message(message):
         return
 
     #bad word
+    bad_word=['fuck','shit','ass', 'bitch','cunt','dick','pussy','nigga','nigger','fucker','stupid']
     for item in bad_word:
       if item in message.content:
         await message.channel.send('That not very nice')
         return
-
-    for item in giveme:
+    
+    for item in give_me:
       if item in message.content:
-        for item in meme:
-          if item in message.content:
+        for i in meme:
+          if i in message.content:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebkit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'}
             response = requests.get("https://memes.tw/wtf/api", headers=headers)
             meme_data = response.json()
             random = randint(0,19)
             meme_url = meme_data[random]['src']          
             await message.channel.send(meme_url)
-
+            return
 
 
     
