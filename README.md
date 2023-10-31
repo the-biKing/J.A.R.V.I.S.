@@ -1,3 +1,6 @@
 # J.A.R.V.I.S.
 JARVIS discord bot
-this is the public version without url shown.
+current function: taiwan weather sorted by city
+                  send meme
+                  tpe,ntp,tyn youbike search
+                  

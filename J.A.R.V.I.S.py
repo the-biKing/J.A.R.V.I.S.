@@ -25,10 +25,6 @@ client = discord.Client(intents=intents)
 
 
 
-give_me=['tell','give','find me']
-
-meme=['meme','迷因']
-
 NTP=['newtaipei','new taipei','New Taipei','NTP','ntp','新北市']
 KHH=['Kaoshiung','kaoshiung','KHH','khh','高雄']
 HSZ=['HSZ','hsz','Hsinchu','hsinchu','新竹']
@@ -276,7 +272,10 @@ async def on_message(message):
       if item in message.content:
         await message.channel.send('That not very nice')
         return
-    
+    #meme,joke
+    give_me=['tell','give','find','send' ]
+    meme=['meme','迷因']
+    joke=['jokes','joke','funny']
     for item in give_me:
       if item in message.content:
         for i in meme:
@@ -288,6 +287,24 @@ async def on_message(message):
             meme_url = meme_data[random]['src']          
             await message.channel.send(meme_url)
             return
+        for i in joke:
+          if i in message.content:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebkit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'}
+            response = requests.get("https://v2.jokeapi.dev/joke/Any", headers=headers)
+            joke_data = response.json()
+            type=joke_data["type"]
+            if type == "single":
+              joke=joke_data["joke"]
+              await message.channel.send(joke)
+              return
+            elif type == "twopart":
+              setup=joke_data["setup"]
+              delivery=joke_data["delivery"]
+              await message.channel.send(setup)
+              await message.channel.send(delivery)
+              return
+            else:
+              print("error")
 
 
     
