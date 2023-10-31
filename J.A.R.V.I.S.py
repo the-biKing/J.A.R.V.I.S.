@@ -1,3 +1,10 @@
+#pull
+'''
+cd https://github.com/the-biKing/J.A.R.V.I.S..git
+git pull
+
+'''
+
 import discord
 import os
 import requests
@@ -204,6 +211,7 @@ async def on_message(message):
 
 
         station=message.content.replace("台大","臺大").split(' ')
+        nonCount=0
         for i in data_TPE:
           space="  "
           spaceInText=" "
@@ -212,6 +220,9 @@ async def on_message(message):
               spaceInText=space*(23-len(i['sna']))
               reply=str(i['sna']).replace("YouBike2.0_","")+spaceInText+"bike: "+str(i['sbi'] )+" slot: "+str(i['bemp'])
               await message.channel.send(reply)
+            else:
+              nonCount+=1
+
         for i in data_NTP_1:
           space="  "
           spaceInText=" "
@@ -220,6 +231,8 @@ async def on_message(message):
               spaceInText=space*(23-len(i['sna']))
               reply=str(i['sna']).replace("YouBike2.0_","")+spaceInText+"bike: "+str(i['sbi'])+" slot: "+str(i['bemp'])
               await message.channel.send(reply)
+            else:
+              nonCount+=1
         for i in data_NTP_2:
           space="  "
           spaceInText=" "
@@ -228,6 +241,8 @@ async def on_message(message):
               spaceInText=space*(23-len(i['sna']))
               reply=str(i['sna']).replace("YouBike2.0_","")+spaceInText+"bike: "+str(i['sbi'] )+" slot: "+str(i['bemp'])
               await message.channel.send(reply)
+            else:
+              nonCount+=1
 
         for i in data_TYN['result']['records']:
           space="  "
@@ -237,7 +252,10 @@ async def on_message(message):
               spaceInText=space*(23-len(i['sna']))
               reply=str(i['sna']).replace("YouBike2.0_","")+spaceInText+"bike: "+str(i['sbi'] )+" slot: "+str(i['bemp'])
               await message.channel.send(reply)
-        
+            else:
+              nonCount+=1
+        if nonCount==4 :
+          await message.channel.send("no related station found")
         return
 
     #bad word
