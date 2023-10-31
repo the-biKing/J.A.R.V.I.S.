@@ -1,7 +1,6 @@
 #pull
 '''
-cd https://github.com/the-biKing/J.A.R.V.I.S..git
-git pull
+git reset --hard
 
 '''
 
