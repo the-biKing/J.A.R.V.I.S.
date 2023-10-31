@@ -1,6 +1,7 @@
 #pull
 '''
 git reset --hard
+git pull
 
 '''
 
