@@ -11,6 +11,7 @@ import requests
 import json
 import ssl
 import urllib.request
+from random import randint
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -21,7 +22,9 @@ response = ['you there', 'u there', 'hello']
 weather=['weather']
 self_intro=['who are u','who r u','who are you','what are you']
 youbike=['youbike','ubike','YouBike','Ubike','youBike','uBike']
-bad_word=['fuck','shit','ass', 'bitch','cunt','dick','pussy','nigga','nigger','fucker']
+bad_word=['fuck','shit','ass', 'bitch','cunt','dick','pussy','nigga','nigger','fucker','stupid']
+giveme=['tell','give','find me']
+meme=['meme','迷因']
 
 NTP=['newtaipei','new taipei','New Taipei','NTP','ntp','新北市']
 KHH=['Kaoshiung','kaoshiung','KHH','khh','高雄']
@@ -71,8 +74,7 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  if any(
-      message.content.startswith(keyword) for keyword in ('jarvis', 'Jarvis')):
+  if any(message.content.startswith(keyword) for keyword in ('jarvis', 'Jarvis')):
     #self_intro
     for item in self_intro:
       if item in message.content:
@@ -263,6 +265,17 @@ async def on_message(message):
       if item in message.content:
         await message.channel.send('That not very nice')
         return
+
+    for item in giveme:
+      if item in message.content:
+        for item in meme:
+          if item in message.content:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebkit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'}
+            response = requests.get("https://memes.tw/wtf/api", headers=headers)
+            meme_data = response.json()
+            random = randint(0,19)
+            meme_url = meme_data[random]['src']          
+            await message.channel.send(meme_url)
 
 
 
