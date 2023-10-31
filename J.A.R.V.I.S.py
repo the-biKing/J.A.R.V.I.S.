@@ -52,7 +52,7 @@ url_TPE = os.environ['UBIKE_1']
 url_NTP_1=os.environ['UBIKE_2']
 url_NTP_2=os.environ['UBIKE_3']
 url_TYN = os.environ['UBIKE_4']
-
+url_weather = os.environ['WTHR_URL']
 
 
 
@@ -95,8 +95,7 @@ async def on_message(message):
     for item in weather:
       if item in message.content:
         def get_weather(x):
-            url = os.environ['WTHR_URL']
-            data = requests.get(url)
+            data = requests.get(url_weather)
             data_json = data.json()
             location = data_json['records']['location']
             quote = ''
