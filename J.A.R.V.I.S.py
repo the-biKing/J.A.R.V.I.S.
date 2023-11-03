@@ -22,9 +22,7 @@ client = discord.Client(intents=intents)
 
 
 taipei_timezone = tz.gettz("Asia/Taipei")
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebkit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
-}
+
 station_dict = {
     "象山": "R02",
     "台北101/世貿": "R03",
@@ -477,10 +475,13 @@ async def on_message(message):
                 current_minute=int(time.split(':')[1])
                 current_second=int(time.split(':')[2])
                 url = 'https://tdx.transportdata.tw/api/basic/v2/Rail/Metro/StationTimeTable/TRTC?%24filter=StationID%20eq%20%27'+str(stationid)+'%27&%24top=30&%24format=JSON'  
+                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebkit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36"
+                }
                 response = requests.get(url, headers=headers)
                 data = json.loads(response.text)
                 if len(data) == 0:
                   await message.channel.send('no train found')
+                  return
                 for i in range(0,len(data)):
                   if data[i]['ServiceDay'][weekday]:
                     k=0
@@ -500,7 +501,7 @@ async def on_message(message):
                         else:
                           await message.channel.send(data[i]["Timetables"][k+1]["ArrivalTime"])
                         break
-
+                return    
 
 
 
